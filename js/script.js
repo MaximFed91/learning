@@ -21,25 +21,13 @@ const personalMovieDB = {
     howMivies() {
         for (let i = 1; i <= personalMovieDB.count; i++) {
             let a = prompt("какой фильм?", "");
-            while (true) {
-                if (!a) {
+            while (!a || a.length == 0 || a.length > 50) {
                     a = prompt("какой фильм?", "");
-                } else if (a.length == 0 || a.length > 50) {
-                    a = prompt("какой фильм?", "");
-                } else {
-                    break;
-                }
             }
             let b = prompt('какая оценка', '');
-            while (true) {
-                if (!b) {
+            while (!b || b.length == 0 || b.length > 50) {
                     b = prompt('какая оценка', '');
-                } else if (b.length == 0 || b.length > 50) {
-                    b = prompt('какая оценка', '');
-                } else {
-                    break;
                 }
-            }
             personalMovieDB.movies[a] = b;
         }
     },
