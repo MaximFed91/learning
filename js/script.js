@@ -1,5 +1,4 @@
 "use strict";
-let numbersOfFilms;
 const personalMovieDB = {
     count: 0,
     movies: {},
@@ -7,9 +6,8 @@ const personalMovieDB = {
     genres: [],
     privat: false,
     start() {
-        while (numbersOfFilms == '' || numbersOfFilms == null || isNaN(numbersOfFilms)) {
-            numbersOfFilms = +prompt("how match films do you watch?", "");
-            personalMovieDB.count = numbersOfFilms;
+        while (personalMovieDB.count == '' || personalMovieDB.count == null || isNaN(numbersOfFilms)) {
+            personalMovieDB.count = +prompt("how match films do you watch?", "");
             if (personalMovieDB.count < 10) {
                 alert('few movies');
             } else if (personalMovieDB.count >= 10 && personalMovieDB.count < 30) {
@@ -47,12 +45,8 @@ const personalMovieDB = {
     writeYourGenres() {
         for (let i = 1; i <= 3; i++) {
             let a = prompt('how is your ' + i + ' favarite genres?', '');
-            while (true) {
-                if (a == '' || a == null) {
+            while (a == '' || a == null) {
                     a = prompt('how is your ' + i + ' favarite genres?', '');
-                } else {
-                    break;
-                }
             }
             personalMovieDB.genres[i - 1] = a;
         }
@@ -70,5 +64,3 @@ const personalMovieDB = {
     },
 };
 
-personalMovieDB.writeYourGenres();
-personalMovieDB.showMyDB();
