@@ -6,20 +6,21 @@ const personalMovieDB = {
     genres: [],
     privat: false,
     start() {
-        while (personalMovieDB.count == '' || personalMovieDB.count == null || isNaN(numbersOfFilms)) {
+        while (personalMovieDB.count == '' || personalMovieDB.count == null || isNaN(personalMovieDB.count)) {
             personalMovieDB.count = +prompt("how match films do you watch?", "");
-            if (personalMovieDB.count < 10) {
-                alert('few movies');
-            } else if (personalMovieDB.count >= 10 && personalMovieDB.count < 30) {
-                alert('normal');
-            } else {
-                alert('many');
-            }
         }
+        if (personalMovieDB.count < 10) {
+            alert('few movies');
+        } else if (personalMovieDB.count >= 10 && personalMovieDB.count < 30) {
+            alert('normal');
+        } else {
+            alert('many');
+        }
+
     },
     howMivies() {
         for (let i = 1; i <= personalMovieDB.count; i++) {
-           let a = prompt("какой фильм?", "");
+            let a = prompt("какой фильм?", "");
             while (true) {
                 if (!a) {
                     a = prompt("какой фильм?", "");
@@ -46,11 +47,11 @@ const personalMovieDB = {
         for (let i = 1; i <= 3; i++) {
             let a = prompt('how is your ' + i + ' favarite genres?', '');
             while (a == '' || a == null) {
-                    a = prompt('how is your ' + i + ' favarite genres?', '');
+                a = prompt('how is your ' + i + ' favarite genres?', '');
             }
             personalMovieDB.genres[i - 1] = a;
         }
-        personalMovieDB.genres.forEach(function(gen, index) {
+        personalMovieDB.genres.forEach(function (gen, index) {
             console.log(`Любимфй жанр №${index + 1} - это ${gen}.`);
         });
     },
@@ -59,8 +60,7 @@ const personalMovieDB = {
             console.log(personalMovieDB);
         }
     },
-    toggleVisibleMyBD(){
+    toggleVisibleMyBD() {
         personalMovieDB.privat = !personalMovieDB.privat;
     },
 };
-
