@@ -1,5 +1,5 @@
 window.addEventListener('DOMContentLoaded', () => {
-
+   //tabs
     const tabs = document.querySelectorAll('.tabcontent'),
         tabsList = document.querySelectorAll('.tabheader__item');
 
@@ -30,4 +30,30 @@ window.addEventListener('DOMContentLoaded', () => {
     });
     hideTabs();
     showTab();
+
+    //timer
+
+    const deadline = '2021-07-05';
+
+    function timeRemain (endtime) {
+        const t = Date.parse(endtime) - new Date(),
+            days = Math.floor(t/1000/60/60/24),
+            hours = (t/1000/60/60)%24,
+            minutes = (t/1000/60)%60,
+            seconds = (t/1000)%60;
+        return {
+            total: t,
+            days,
+            hours,
+            minutes,
+            seconds
+        };
+    }
+    function setTiner (selector, endtime) {
+        const timer = document.querySelector(selector),
+             days = timer.querySelector('#days'),
+             minutes = timer.querySelector('#minutes'),
+             hours = timer.querySelector('#hours'),
+             seconds = timer.querySelector('#seconds');
+    }
 });
