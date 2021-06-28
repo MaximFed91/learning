@@ -1,3 +1,4 @@
+'use strickt';
 window.addEventListener('DOMContentLoaded', () => {
     //tabs
     const tabs = document.querySelectorAll('.tabcontent'),
@@ -85,19 +86,20 @@ window.addEventListener('DOMContentLoaded', () => {
     }
     setTimer('.timer', deadline);
     const timerID = setInterval(setTimer, 1000, '.timer', deadline);
-    
+
 
 
     //Modal
     const btnModal = document.querySelectorAll('[data-modal]'),
         modalForm = document.querySelector('.modal');
-    
-    function modalShow () {
+
+    function modalShow() {
         modalForm.style.display = 'block';
         document.body.style.overflow = 'hidden';
         clearTimeout(modalTimerID);
     }
-    function modalClose () {
+
+    function modalClose() {
         modalForm.style.display = 'none';
         document.body.style.overflow = '';
     }
@@ -107,19 +109,82 @@ window.addEventListener('DOMContentLoaded', () => {
     });
 
     modalForm.addEventListener('click', (event) => {
-        if (event.target && (event.target.matches('.modal') || 
-        event.target.matches('.modal__close'))) {
+        if (event.target && (event.target.matches('.modal') ||
+                event.target.matches('.modal__close'))) {
             modalClose();
         }
     });
-    const modalTimerID = setTimeout(modalShow, 5000);
+    // const modalTimerID = setTimeout(modalShow, 5000);
 
-    function scrolShowModal () {
-        if (window.scrollY + document.documentElement.clientHeight >= 
+    function scrolShowModal() {
+        if (window.scrollY + document.documentElement.clientHeight >=
             document.documentElement.scrollHeight) {
-                modalShow();
-                window.removeEventListener('scroll', scrolShowModal);
-            }
+            modalShow();
+            window.removeEventListener('scroll', scrolShowModal);
+        }
     }
     window.addEventListener('scroll', scrolShowModal);
+
+    //Class card
+
+    class MenuCard {
+        constructor(srcImg, alt, title, text, price, parentSelector) {
+            this.src = srcImg,
+                this.alt = alt,
+                this.title = title,
+                this.text = text,
+                this.price = price,
+                this.cursUSD = 72,
+                this.changeRUB(),
+                this.parent = document.querySelector(parentSelector);
+        }
+
+        changeRUB() {
+            this.price = this.price * this.cursUSD;
+        }
+        render() {
+            const card = document.createElement('div');
+            card.innerHTML = `
+            <div class="menu__item">
+                <img src=${this.src} alt=${this.alt}>
+                <h3 class="menu__item-subtitle">${this.title}</h3>
+                <div class="menu__item-descr">${this.text}</div>
+                <div class="menu__item-divider"></div>
+                <div class="menu__item-price">
+                    <div class="menu__item-cost">Цена:</div>
+                    <div class="menu__item-total"><span>${this.price}</span> руб/день</div>
+                </div>
+            </div>
+            `;
+            this.parent.append(card);
+        }
+    }
+
+    new MenuCard(
+        "img/tabs/vegy.jpg",
+        "vegy",
+        'Меню "Фитнес"',
+        'Меню "Фитнес" - это новый подход к приготовлению блюд: больше свежих овощей и фруктов. Продукт активных и здоровых людей. Это абсолютно новый продукт с оптимальной ценой и высоким качеством!',
+        9,
+        '.menu .container'
+        ).render();
+
+    new MenuCard(
+        "img/tabs/elite.jpg",
+        "elite",
+        'Меню “Премиум”',
+        'В меню “Премиум” мы используем не только красивый дизайн упаковки, но и качественное исполнение блюд. Красная рыба, морепродукты, фрукты - ресторанное меню без похода в ресторан!',
+        19,
+        '.menu .container'
+    ).render();
+
+    new MenuCard(
+        "img/tabs/post.jpg",
+        "post",
+        'Меню "Постное"',
+        'Меню “Постное” - это тщательный подбор ингредиентов: полное отсутствие продуктов животного происхождения, молоко из миндаля, овса, кокоса или гречки, правильное количество белков за счет тофу и импортных вегетарианских стейков.',
+        15,
+        '.menu .container'
+    ).render();
+
 });
