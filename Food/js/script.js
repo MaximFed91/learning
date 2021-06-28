@@ -50,7 +50,6 @@ window.addEventListener('DOMContentLoaded', () => {
             minutes = Math.floor((t / 1000 / 60) % 60),
             seconds = Math.floor((t / 1000) % 60);
 
-        console.log(hours);
         return {
             total: t,
             days,
@@ -86,6 +85,24 @@ window.addEventListener('DOMContentLoaded', () => {
     }
     setTimer('.timer', deadline);
     const timerID = setInterval(setTimer, 1000, '.timer', deadline);
+    
 
 
+    //Modal
+    const btnModal = document.querySelectorAll('[data-modal]'),
+        modalForm = document.querySelector('.modal');
+    
+    btnModal.forEach((item) => {
+        item.addEventListener('click', () => {
+            modalForm.style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        });
+    });
+    modalForm.addEventListener('click', (event) => {
+        if (event.target && (event.target.matches('.modal') || 
+        event.target.matches('.modal__close'))) {
+            modalForm.style.display = 'none';
+            document.body.style.overflow = '';
+        }
+    });
 });
