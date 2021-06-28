@@ -114,7 +114,7 @@ window.addEventListener('DOMContentLoaded', () => {
             modalClose();
         }
     });
-    // const modalTimerID = setTimeout(modalShow, 5000);
+    const modalTimerID = setTimeout(modalShow, 5000);
 
     function scrolShowModal() {
         if (window.scrollY + document.documentElement.clientHeight >=
