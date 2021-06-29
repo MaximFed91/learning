@@ -145,7 +145,7 @@ window.addEventListener('DOMContentLoaded', () => {
         }
         render() {
             const card = document.createElement('div');
-            if (this.clases.length === 0){
+            if (this.clases.length === 0) {
                 this.clases[0] = 'menu__item';
             }
             this.clases.forEach((classItem) => {
@@ -172,7 +172,7 @@ window.addEventListener('DOMContentLoaded', () => {
         'Меню "Фитнес" - это новый подход к приготовлению блюд: больше свежих овощей и фруктов. Продукт активных и здоровых людей. Это абсолютно новый продукт с оптимальной ценой и высоким качеством!',
         9,
         '.menu .container'
-        ).render();
+    ).render();
 
     new MenuCard(
         "img/tabs/elite.jpg",
@@ -193,5 +193,44 @@ window.addEventListener('DOMContentLoaded', () => {
         '.menu .container',
         'menu__item'
     ).render();
+
+    //Form
+
+    const forms = document.querySelectorAll('form');
+    forms.forEach((item) => {
+        postForm(item);
+    });
+
+    function postForm(form) {
+        const formMassage = document.createElement('div'),
+            messages = {
+                ok: 'Спасибо! мы вам перезвоним.',
+                loading: 'Загрузка',
+                fail: 'Что-то пошло не так...'
+            };
+
+
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            formMassage.textContent = messages.loading;
+            form.append(formMassage);
+            const formData = new FormData(form);
+            const req = new XMLHttpRequest();
+            req.open('POST', 'server.php');
+            req.send(formData);
+            req.addEventListener('load', () => {
+                if (req.status === 200) {
+                    console.log(req.response);
+                    formMassage.textContent = messages.ok;
+                    form.reset();
+                } else {
+                    formMassage.textContent = messages.fail;
+                }
+                setTimeout(()=>{
+                    formMassage.remove();
+                }, 3000);
+            });
+        });
+    }
 
 });
