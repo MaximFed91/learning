@@ -202,35 +202,55 @@ window.addEventListener('DOMContentLoaded', () => {
     });
 
     function postForm(form) {
-        const formMassage = document.createElement('div'),
+        const loadingImg = document.createElement('img'),
             messages = {
                 ok: 'Спасибо! мы вам перезвоним.',
-                loading: 'Загрузка',
+                loading: 'img/spinner.svg',
                 fail: 'Что-то пошло не так...'
             };
-
+            loadingImg.src = messages.loading;
+            loadingImg.style.cssText = `
+            display: block;
+            margin: 0 auto
+            `;
 
         form.addEventListener('submit', (e) => {
             e.preventDefault();
-            formMassage.textContent = messages.loading;
-            form.append(formMassage);
+            form.append(loadingImg);
             const formData = new FormData(form);
             const req = new XMLHttpRequest();
             req.open('POST', 'server.php');
             req.send(formData);
             req.addEventListener('load', () => {
+                loadingImg.remove();
                 if (req.status === 200) {
                     console.log(req.response);
-                    formMassage.textContent = messages.ok;
+                    thanksFormModal(messages.ok);
                     form.reset();
                 } else {
-                    formMassage.textContent = messages.fail;
+                    thanksFormModal(messages.fail);
                 }
-                setTimeout(()=>{
-                    formMassage.remove();
-                }, 3000);
             });
         });
+    }
+
+    function thanksFormModal(message) {
+        const modalContent = document.querySelector('.modal__content'),
+            thanksContent = document.createElement('div');
+        modalShow();
+        modalContent.style.display = 'none';
+        thanksContent.classList.add('modal__content');
+        thanksContent.innerHTML = `
+        <div class="modal__close">&times;</div>
+        <div class="modal__title">${message}</div>
+        `;
+        document.querySelector('.modal__dialog').append(thanksContent);
+        setTimeout(() => {
+            thanksContent.remove();
+            modalContent.style.display = 'block';
+            modalClose();
+        }, 4000);
+
     }
 
 });
