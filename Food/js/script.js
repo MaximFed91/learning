@@ -217,20 +217,29 @@ window.addEventListener('DOMContentLoaded', () => {
         form.addEventListener('submit', (e) => {
             e.preventDefault();
             form.append(loadingImg);
-            const formData = new FormData(form);
-            const req = new XMLHttpRequest();
-            req.open('POST', 'server.php');
-            req.send(formData);
-            req.addEventListener('load', () => {
+            const formData = new FormData(form),
+                objData = {};
+                formData.forEach((value, key) => {
+                    objData[key] = value;
+                });
+
+            fetch('server.php', {
+                method: 'POST',
+                headers: {
+                    'Content-type' : 'application/json'
+                },
+                body: JSON.stringify(objData)
+            }).then(data => data.text())
+            .then((data) => {
                 loadingImg.remove();
-                if (req.status === 200) {
-                    console.log(req.response);
-                    thanksFormModal(messages.ok);
-                    form.reset();
-                } else {
-                    thanksFormModal(messages.fail);
-                }
+                console.log(data);
+                thanksFormModal(messages.ok);
+            }).catch(() => {
+                thanksFormModal(messages.fail);
+            }).finally(() => {
+                form.reset();
             });
+
         });
     }
 
